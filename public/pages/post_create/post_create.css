@@ -4,86 +4,143 @@
 
 .page-title {
     text-align: center;
-    font-size: 24px;
-    margin-bottom: 30px;
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 40px;
     color: #394648;
+    letter-spacing: -0.5px;
 }
 
 /* 입력 필드 그룹 */
 .input-group {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
-.input-group label {
+.input-group label, 
+.input-label {
     display: block;
-    margin-bottom: 8px;
-    font-size: 18px;
-    font-weight: 600;
-    color: #394648;
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #5A6A6C;
+    letter-spacing: -0.2px;
 }
 
 .input-group input[type="text"],
 .input-group textarea {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #CBAC88;
-    border-radius: 4px;
+    padding: 14px 16px;
+    border: 1px solid #D4CDC6; 
+    border-radius: 8px;
     font-size: 16px;
     color: #394648;
-    font-family: 'Helvetica', sans-serif;
+    background-color: #FFFFFF; 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-sizing: border-box;
+}
+
+.input-group input[type="text"]::placeholder,
+.input-group textarea::placeholder {
+    color: #C4C4C4;
 }
 
 .input-group input[type="text"]:focus,
 .input-group textarea:focus {
     outline: none;
     border-color: #EDB6A3;
-    box-shadow: 0 0 0 2px rgba(237, 182, 163, 0.25);
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(237, 182, 163, 0.25);
+    transform: translateY(-1px);
 }
 
 .input-group textarea {
     resize: none;
-    min-height: 200px;
+    min-height: 300px;
 }
 
-/* [추가] textarea와 카운터를 세로로 묶는 래퍼 */
 .textarea-wrapper {
     display: flex;
     flex-direction: column; /* 세로로 쌓음 */
 }
 
-/* [추가] 글자 수 카운터 스타일 */
+/* [추가] 글자 수 카운터 */
 .char-counter {
-    font-size: 14px;
-    color: #888;
-    text-align: right; /* 오른쪽 정렬 */
-    margin-top: 5px;
+    font-size: 13px;
+    color: #9EA4A5;
+    text-align: right;
+    margin-top: 8px;
+    font-weight: 500;
 }
 
 /* 파일 업로드 버튼 */
+.input-group .file-upload-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: #FFFFFF;
+    border: 1px solid #D4CDC6;
+    border-radius: 6px;
+    color: #5A6A6C;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 15px;
+}
+
+.file-upload-button:hover {
+    border-color: #EDB6A3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(237, 182, 163, 0.15);
+}
+
 .input-group input[type="file"] {
     font-size: 14px;
     color: #394648;
 }
 
+#post-images {
+    display: none;
+}
+
 /* 이미지 미리보기 컨테이너 */
 .image-preview-container {
     display: flex;
-    flex-wrap: wrap; /* 이미지가 많아지면 다음 줄로 */
-    gap: 10px;
-    margin-top: 15px;
-    border: 1px solid #eee;
-    border-radius: 4px;
-    padding: 10px;
-    min-height: 80px;
-    background-color: #fdfaf9;
+    flex-wrap: wrap;
+    gap: 12px;
+  
+    padding: 15px;
+    background-color: #FAFAFA;
+    border-radius: 8px;
+    border: 1px solid #F0F0F0;
+    min-height: 132px;
+
+    align-content: flex-start;
 }
 
-.image-preview {
+/* 개별 이미지와 버튼을 감싸는 컨테이너 */
+.preview-item {
+    position: relative;
     width: 100px;
     height: 100px;
-    object-fit: cover; /* 이미지 비율 유지하며 채우기 */
-    border-radius: 4px;
+    border-radius: 8px;
+
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    background-color: white;
+}
+
+/* 이미지 스타일 */
+.preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
     border: 1px solid #ddd;
+    display: block;
 }
 
 /* 완료 버튼 */
@@ -93,57 +150,47 @@
 
 #submit-button {
     width: 100%;
-    padding: 12px;
+    padding: 16px;
     border: none;
-    border-radius: 4px;
-    background-color: #69995D;
+    border-radius: 8px;
+    
+    background: linear-gradient(135deg, #7AB06D 0%, #69995D 100%);
+    
     color: white;
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.2s;
+    letter-spacing: 0.5px;
+    
+    box-shadow: 0 6px 12px rgba(105, 153, 93, 0.35);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 #submit-button:hover {
-    background-color: #57834E;
+    filter: brightness(105%);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(105, 153, 93, 0.4);
 }
 
 #submit-button:disabled {
-    background-color: #A9A9A9;
+    background: #E0E0E0;
+    color: #A0A0A0;
     cursor: not-allowed;
-}
-
-/* 개별 이미지와 버튼을 감싸는 컨테이너 */
-.preview-item {
-    position: relative; /* 버튼을 이미지 위에 겹치기 위함 */
-    display: inline-block;
-    width: 100px;
-    height: 100px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-}
-
-/* 이미지 스타일 (기존 .image-preview 대체/보완) */
-.preview-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    display: block;
+    box-shadow: none;
+    transform: none;
 }
 
 /* 삭제(X) 버튼 스타일 */
-.delete-btn {
+.delete-button {
     position: absolute;
     top: -6px;
     right: -6px;
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background-color: #ff6b6b; /* 눈에 띄는 붉은색 계열 */
+    background-color: #ff6b6b;
     color: white;
-    border: 2px solid white; /* 이미지와 구분을 위한 테두리 */
+    border: 2px solid white;
     font-size: 12px;
     font-weight: bold;
     cursor: pointer;
@@ -152,10 +199,10 @@
     justify-content: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     transition: background-color 0.2s;
-    padding: 0; /* 기본 패딩 제거 */
+    padding: 0;
 }
 
-.delete-btn:hover {
+.delete-button:hover {
     background-color: #fa5252;
-    transform: scale(1.1); /* 호버 시 약간 커짐 */
+    transform: scale(1.1);
 }

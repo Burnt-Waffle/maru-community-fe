@@ -1,9 +1,11 @@
 /* '회원가입' 제목 스타일 */
 .text {
     text-align: center;
-    font-size: 24px;
-    margin-bottom: 30px;
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 40px;
     color: #394648;
+    letter-spacing: -0.5px;
 }
 
 .main-content {
@@ -12,31 +14,50 @@
 
 /* 입력 필드 (이메일, 비밀번호) */
 .input {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
-.profile-image-preview{
-    background: none;
-    border: 2px solid #CBAC88;
+.input label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #5A6A6C;
+    letter-spacing: -0.2px;
+}
+
+.profile-image-preview {
+    background-color: #FAFAFA;
+    border: 2px solid #EDB6A3;
     border-radius: 50%;
     overflow: hidden;
     display: block;
-    margin: auto;
-    width: 170px;
-    height: 170px;
+    margin: 10px auto 30px auto;
+    width: 160px;
+    height: 160px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 #profile-image-button {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
 .profile-image-preview:hover {
     border-color: #EDB6A3;
-    box-shadow: 0 0 0 4px rgba(237, 182, 163, 0.25);
+    box-shadow: 0 8px 20px rgba(203, 172, 136, 0.3);
+    transform: translateY(-2px);
+}
+
+.profile-image-preview:hover #profile-image-button {
+    transform: scale(1.05);
 }
 
 #profile-image-upload {
@@ -44,62 +65,84 @@
 }
 
 /* '이메일', '비밀번호' */
-.input label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 18px;
-    font-weight: 600;
-    color: #394648;
-}
-
 /* input 태그 */
 .input input {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #CBAC88;
-    border-radius: 4px;
-    font-size: 18px;
+    padding: 14px 16px;
+    border: 1px solid #D4CDC6;
+    border-radius: 8px;
+    font-size: 16px;
     color: #394648;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input input::placeholder {
+    color: #C4C4C4;
+    font-weight: 400;
 }
 
 /* input 태그에 포커스 되었을 때 */
 .input input:focus {
     outline: none;
     border-color: #EDB6A3;
-    box-shadow: 0 0 0 2px rgba(237, 182, 163, 0.25);
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 16px rgba(203, 172, 136, 0.25);
+    transform: translateY(-2px);
 }
 
 /* 헬퍼 메시지 */
 .helper-text {
-    font-size: 16px;
-    color: #EDB6A3;
-    font-weight: bold;
-    margin-top: 5px;
-    height: 12px;
+    font-size: 13px;
+    color: #E07A5F;
+    font-weight: 500;
+    margin-top: 6px;
+    padding-left: 4px;
+    min-height: 18px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
 }
 
 /* 회원가입 버튼 */
 #submit-button {
     width: 100%;
-    padding: 12px;
+    padding: 16px;
     border: none;
-    border-radius: 4px;
-    background-color: #69995D;
+    border-radius: 8px;
+    
+    background: linear-gradient(135deg, #7AB06D 0%, #69995D 100%);
+    
     color: white;
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.2s;
+    letter-spacing: 0.5px;
+    
+    box-shadow: 0 6px 12px rgba(105, 153, 93, 0.35);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 /* 회원가입 버튼에 마우스를 올렸을 때 */
 #submit-button:hover {
-    background-color: #57834E;
+    filter: brightness(105%);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(105, 153, 93, 0.4);
 }
 
 #submit-button:disabled {
-    background-color: #A9A9A9;
+    background: #E0E0E0;
+    color: #A0A0A0;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    filter: none;
 }
 
 /* 회원정보수정 페이지에서 사용 */
@@ -108,26 +151,23 @@
     color: #555;
     padding: 12px 0;
     line-height: 1.4;
+    text-align: center;
 }
 
-.buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px
-}
 
 .delete-link {
     text-decoration: none;
-    color: #EDB6A3;
-    font-size: 15px;
+    color: #9EA4A5;
+    font-size: 14px;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0;
+    padding: 5px;
     font-family: inherit;
+    transition: color 0.2s;
 }
 
 .delete-link:hover {
+    color: #E07A5F;
     text-decoration: underline;
 }

@@ -1,0 +1,181 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #394648;
+    color: #394648;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.wrap {
+    width: 600px;
+    padding: 60px 40px;
+    background-color: #ffffff;
+    min-height: 100vh;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    width: 100%;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #394648;
+    padding-bottom: 20px;
+}
+
+/* --- 약관 리스트 --- */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* --- 개별 약관 카드 --- */
+li {
+    background-color: #FAFAFA;
+    border: 1px solid #F0F0F0;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 15px;
+}
+
+li:hover {
+    background-color: #FFFFFF;
+    border-color: #EDB6A3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(237, 182, 163, 0.15);
+}
+
+.all-check-container:hover {
+    background-color: #FFFFFF;
+    border-color: #EDB6A3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(237, 182, 163, 0.15);
+}
+
+a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    text-decoration: none;
+    color: #5A6A6C;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+a:hover {
+    color: #394648;
+}
+
+.terms-guide {
+    text-align: center;
+    color: #5A6A6C;
+    margin-bottom: 30px;
+}
+
+.all-check-container {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: #FAFAFA;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #F0F0F0;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.2s ease;
+}
+
+.all-check-container label {
+    font-size: 16px;
+    cursor: pointer;
+    color: #394648;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid #D4CDC6;
+    margin-bottom: 20px;
+}
+
+/* 체크박스 디자인 */
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    cursor: pointer;
+    accent-color: #69995D;
+}
+
+.term-item-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.term-label {
+    font-size: 16px;
+    color: #394648;
+    font-weight: 600;
+    cursor: pointer;
+    flex-grow: 1; /* 남은 공간 차지 */
+}
+
+.term-link {
+    font-size: 13px;
+    color: #9EA4A5;
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.term-link:hover {
+    color: #394648;
+}
+
+.next-button {
+    width: 100%;
+    margin-top: 40px;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #7AB06D 0%, #69995D 100%);
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(105, 153, 93, 0.3);
+    transition: all 0.2s;
+}
+
+.next-button:disabled {
+    background: #E0E0E0;
+    color: #9EA4A5;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+.next-button:not(:disabled):hover {
+    transform: translateY(-2px);
+    filter: brightness(105%);
+    box-shadow: 0 6px 15px rgba(105, 153, 93, 0.4);
+}

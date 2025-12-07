@@ -5,6 +5,7 @@ export const loadHeader = async (options = {}) => {
     const config = {
         showProfileButton: true,
         showBackButton: true,
+        backurl: null,
         ...options
     };
 
@@ -45,7 +46,11 @@ export const loadHeader = async (options = {}) => {
         // 뒤로가기 버튼 설정
         if (backButton) {
             backButton.addEventListener('click', () => {
-                history.back();
+                if (config.backurl) {
+                    window.location.href = config.backurl
+                } else {
+                    history.back();
+                }
             });
         }
 

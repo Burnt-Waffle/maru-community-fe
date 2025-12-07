@@ -24,7 +24,11 @@ const commentListContainer = document.getElementById('comment-list');
 
 document.addEventListener('DOMContentLoaded', async () => {
     await performSilentRefresh();
-    await loadHeader({ showProfileButton: true, showBackButton: true });
+    await loadHeader({
+        showProfileButton: true,
+        showBackButton: true,
+        backUrl: '/public/pages/post_list/post_list.html'
+    });
     const urlParams = new URLSearchParams(window.location.search);
     currentPostId = urlParams.get('id');
     if (currentPostId) {
@@ -106,36 +110,35 @@ const loadComments = async (postId) => {
     }
 };
 
+const attachCommentEventListeners = (commentElement, commentData) => {
+    const editButton = commentElement.querySelector('.comment-edit-button');
+    const deleteButton = commentElement.querySelector('.comment-delete-button');
+
+    if (editButton && deleteButton) {
+        if (commentData.author) {
+            editButton.style.display = 'inline-block';
+            deleteButton.style.display = 'inline-block';
+
+            editButton.addEventListener('click', () => {
+                handleEditComment(commentData.id, commentData.content);
+            });
+
+            deleteButton.addEventListener('click', () => {
+                handleDeleteComment(currentPostId, commentData.id);
+            });
+        } else {
+            editButton.style.display = 'none';
+            deleteButton.style.display = 'none';
+        }
+    }
+};
+
+
 const appendComments = (comments) => {
     comments.forEach(commentData => {
-        console.log('Processing comment data:', commentData);
         const commentElement = createCommentElement(commentData);
-
-        const editButton = commentElement.querySelector('.comment-edit-button');
-        const deleteButton = commentElement.querySelector('.comment-delete-button');
-
-        if (editButton && deleteButton) {
-            if (commentData.author) {
-                editButton.style.display = 'inline-block';
-                deleteButton.style.display = 'inline-block';
-
-                editButton.addEventListener('click', () => {
-                    console.log(`Edit comment ID: ${commentData.id}`);
-                    handleEditComment(commentData.id, commentData.content);
-                });
-
-                deleteButton.addEventListener('click', () => {
-                    console.log(`Delete comment ID: ${commentData.id}`);
-                    handleDeleteComment(currentPostId, commentData.id);
-                });
-            } else {
-                editButton.style.display = 'none';
-                deleteButton.style.display = 'none';
-            }
-        } else {
-            console.error("댓글의 수정 또는 삭제 버튼을 찾을 수 없습니다.")
-        }
-
+        // [변경] 공통 함수 사용하여 이벤트 연결
+        attachCommentEventListeners(commentElement, commentData);
         commentListContainer.appendChild(commentElement);
     });
 };
@@ -167,18 +170,38 @@ const handleSubmitComment = async (postId) => {
 
     try {
         if (isEditingComment && editingCommentId) {
-            await updateComment(postId, editingCommentId, content);
+            const updatedData = await updateComment(postId, editingCommentId, content);
+            const commentElement = document.querySelector(`.comment-container[data-comment-id="${editingCommentId}"]`);
+            if (commentElement) {
+                const contentDiv = commentElement.querySelector('.comment-content');
+                if (contentDiv) {
+                    contentDiv.textContent = content;
+                }
+                const newCommentElement = createCommentElement(updatedData);
+                attachCommentEventListeners(newCommentElement, updatedData);
+                commentElement.replaceWith(newCommentElement);
+            }
+            isEditingComment = false;
+            editingCommentId = null;
+            commentPostButton.textContent = '댓글 등록';
+            showToast('댓글이 수정되었습니다.');
+
         } else {
-            await postComment(postId, content);
+            const newCommentData = await postComment(postId, content);
+            const newCommentElement = createCommentElement(newCommentData);
+            attachCommentEventListeners(newCommentElement, newCommentData);
+            commentListContainer.prepend(newCommentElement);
+            updateCommentCountDisplay(1);
         }
+
         commentInputBox.value = '';
         updateCommentButtonState();
-        window.location.reload();
     } catch (error) {
         console.error('댓글 등록 실패:', error);
         showToast(`댓글 등록에 실패했습니다. ${error.message}`);
         commentPostButton.textContent = originalButtonText;
     } finally {
+        commentPostButton.textContent = isEditingComment ? '댓글 수정' : '댓글 등록';
         commentPostButton.disabled = false;
     }
 };
@@ -219,8 +242,15 @@ const handleDeleteComment = async (postId, commentId) => {
     if (userConfirm) {
         try {
             await deleteComment(postId, commentId);
+
+            const commentElement = document.querySelector(`.comment-container[data-comment-id="${commentId}"]`);
+            if (commentElement) {
+                commentElement.style.opacity = '0';
+                setTimeout(() => commentElement.remove(), 300);
+            }
+            updateCommentCountDisplay(-1);
+
             await showInfoModal('댓글이 삭제되었습니다.');
-            window.location.reload();
         } catch (error) {
             console.error('댓글 삭제 실패:', error);
             showToast(`댓글 삭제에 실패했습니다: ${error.message}`);
@@ -238,3 +268,13 @@ const handleEditComment = async (commentId, currentContent) => {
 
     updateCommentButtonState();
 }
+
+// 댓글 수를 업데이트하는 헬퍼 함수
+const updateCommentCountDisplay = (delta) => {
+    const commentCountElement = document.querySelector('.post-detail-container .comments');
+    if (commentCountElement) {
+        let currentCount = parseInt(commentCountElement.textContent.replace('댓글수 ', '')) || 0;
+        currentCount += delta;
+        commentCountElement.textContent = `댓글수 ${currentCount}`;
+    }
+};

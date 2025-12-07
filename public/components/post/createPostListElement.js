@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "../../../utils/config.js";
-import { formatDate } from "../../../utils/function.js";
+import { formatDate, escapeHtml } from "../../../utils/function.js";
 
 export const createPostListElement = ({ id, title, thumbnailUrl, authorNickname, authorProfileImageUrl, createdAt, updatedAt, viewCount, likeCount, commentCount }) => {
     const container = document.createElement('div');
@@ -18,7 +18,7 @@ export const createPostListElement = ({ id, title, thumbnailUrl, authorNickname,
     }
 
     container.innerHTML = `
-        <h3 class="post-title">${title}</h3>
+        <h3 class="post-title">${escapeHtml(title)}</h3>
         <div class="post-meta">
             <div class="post-stats">
                 <span>좋아요 ${likeCount}</span>
@@ -28,8 +28,8 @@ export const createPostListElement = ({ id, title, thumbnailUrl, authorNickname,
             <span class="post-date">${formattedDate}</span>
         </div>
         <div class="author">
-            <img class="author-profile-image" src="${profileImageUrl}" alt="프로필 이미지">
-            <div class="author-nickname">${authorNickname}</div>
+            <img class="author-profile-image" src="${escapeHtml(profileImageUrl)}" alt="프로필 이미지">
+            <div class="author-nickname">${escapeHtml(authorNickname)}</div>
         </div>
     `;
 

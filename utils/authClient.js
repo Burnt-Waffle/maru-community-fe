@@ -85,6 +85,8 @@ export const refreshToken = async () => {
 
         if (!response.ok) {
             throw new Error('Failed to refresh token.');
+            error.status = response.status;
+            throw error;
         }
 
         const data = await response.json();
@@ -94,9 +96,7 @@ export const refreshToken = async () => {
         return data.accessToken;
 
     } catch (error) {
-        console.error('Token refresh error:', error);
-        // 갱신 실패 시 로그아웃 처리
-        // logoutUser();
+        console.warn('Token refresh failed (expected if not logged in):', error.message);
         throw error;
     }
 }

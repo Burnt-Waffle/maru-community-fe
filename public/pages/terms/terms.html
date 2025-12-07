@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>약관 동의</title>
+    <link rel="stylesheet" href="../../components/layout/layout.css">
+    <link rel="stylesheet" href="../../components/header/header.css">
+    <link rel="stylesheet" href="terms.css">
+</head>
+
+<body>
+    <div id="header-placeholder"></div>
+
+    <section class="wrap">
+        <div class="container">
+            <h1>약관 동의</h1>
+            <p class="terms-guide">서비스 이용을 위해 아래 약관에 동의해주세요.</p>
+
+            <div class="all-check-container">
+                <input type="checkbox" id="check-all">
+                <label for="check-all"><strong>전체 동의하기</strong></label>
+            </div>
+
+            <hr class="divider">
+
+            <ul id="term-list">
+                <!-- JS로 리스트 아이템이 여기에 추가됨 -->
+            </ul>
+
+            <button id="next-button" class="next-button" disabled>다음</button>
+        </div>
+    </section>
+
+    <script type="module" src="terms.js"></script>
+</body>
+
+</html>

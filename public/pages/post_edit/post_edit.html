@@ -7,7 +7,7 @@
     <link href="/public/components/header/header.css" rel="stylesheet" type="text/css">
     <link href="/public/components/layout/layout.css" rel="stylesheet" type="text/css">
     <link href="../post_create/post_create.css" rel="stylesheet" type="text/css">
-    <title>아무말대잔치 게시글 수정</title>
+    <title>대청마루 게시글 수정</title>
 </head>
 
 <body>
@@ -21,22 +21,25 @@
                 <!-- 게시글 제목 -->
                 <div class="input-group">
                     <label for="post-title">제목</label>
-                    <input type="text" id="post-title" name="title"
-                    placeholder="제목을 입력하세요. (최대 26글자)" maxlength="26" required>
+                    <input type="text" id="post-title" name="title" placeholder="제목을 입력하세요. (최대 26글자)" maxlength="26"
+                        required>
                 </div>
                 <!-- 게시글 내용 -->
                 <div class="input-group">
                     <label for="post-content">내용</label>
                     <div class="textarea-wrapper">
-                        <textarea id="post-content" name="content" rows="15"
-                        maxlength="10000" placeholder="내용을 입력하세요" required></textarea>
+                        <textarea id="post-content" name="content" rows="15" maxlength="10000" placeholder="내용을 입력하세요"
+                            required></textarea>
                         <div class="char-counter" id="content-char-counter">0 / 10000</div>
                     </div>
                 </div>
                 <!-- 이미지 파일 업로드 -->
                 <div class="input-group">
-                    <label>이미지 첨부 (선택)</label>
+                    <label>이미지 첨부</label>
                     <input type="file" id="post-images" name="images" multiple accept="image/*">
+                    <label for="post-images" class="file-upload-button">
+                        <span>사진 추가하기</span>
+                    </label>
                     <!-- 이미지 미리보기 영역 -->
                     <div class="image-preview-container" id="image-preview-container">
                         <!-- JS로 이미지 미리보기를 여기에 추가 -->

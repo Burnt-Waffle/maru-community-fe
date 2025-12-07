@@ -1,81 +1,146 @@
 .header-wrap {
     position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
     max-width: 600px;
-    padding: 20px 0px;
-    margin: 0 auto;
+    height: 60px;
+    padding: 0 20px;
+    
     display: flex;
-    justify-content: space-evenly;
     align-items: center;
-    background-color: #ffffff;
-    border-bottom: 1px solid #394648;
+    
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    z-index: 100;
 }
 
-/* 아무 말 대잔치 로고 */
+/* 대청마루 로고 */
 .logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    
     color: #394648;
-    font-size: 32px;
-    font-weight: 700;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    /* cursor: pointer; */
+    user-select: none;
+    
+    max-width: 50%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .header-icon-button {
-    /* 버튼 기본 스타일 제거 */
     background: none;
     border: none;
-    padding: 5px;
+    
+    width: 44px;
+    height: 44px;
+    padding: 0; 
+    
+    border-radius: 50%;
     cursor: pointer;
-    border-radius: 50%; /* 원형 버튼 */
-    transition: background-color 0.2s;
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* 버튼에 마우스를 올렸을 때 강조 */
 .header-icon-button:hover {
-    background-color: #F8E9E9;
+    background-color: rgba(57, 70, 72, 0.05);
+    transform: translateY(-1px);
 }
 
 /* 버튼 이미지 맞춤 */
 .header-icon-button img {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
     border-radius: 50%;
-    border: 2px solid #CBAC88;
+    border: 2px solid #394648;
 }
 
-.profile-container {
+#back-button {
     position: relative;
+    z-index: 10;
+}
+
+/* --- 프로필 영역 --- */
+.profile-container {
+    margin-left: auto; 
+    
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#profile-button img {
+    width: 34px; 
+    height: 34px;
+    
+    border-radius: 50%;
+    object-fit: cover;
+    
+    border: 2px solid #394648; 
+    box-sizing: border-box;
+    
+    transition: border-color 0.2s;
 }
 
 .header-dropdown-menu {
     position: absolute;
-    top: 110%;
+    top: 55px;
     right: 0;
-    z-index: 100;
-    min-width: 150px;
-    background-color: white;
-    border-radius: 8px;
-    border: 1px solid #F8E9E9;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    z-index: 200;
+    min-width: 160px;
+    
+    background-color: #ffffff;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(57, 70, 72, 0.15);
+    
+    padding: 8px;
+    
+
+    opacity: 0;
     visibility: hidden;
+    transform: translateY(-10px) scale(0.95);
+    transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    
+    transform-origin: top right;
 }
 
 .header-dropdown-menu.is-active {
+    opacity: 1;
     visibility: visible;
+    transform: translateY(0) scale(1);
 }
 
 .header-dropdown-menu a {
     display: block;
-    padding: 10px 16px;
+    padding: 12px 16px;
     font-size: 14px;
-    color: #394648;
+    font-weight: 500;
+    color: #5A6A6C;
     text-decoration: none;
-    text-align: center;
+    border-radius: 8px;
+    transition: background-color 0.2s, color 0.2s;
+    text-align: left;
 }
 
 .header-dropdown-menu a:hover {
-    background-color: #F8E9E9;
+    background-color: #F7F5F2;
+    color: #394648;
+    font-weight: 600;
 }
 
 .hidden {

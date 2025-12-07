@@ -1,0 +1,100 @@
+name: maru-frontend CICD
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      
+      - name: Clean install dependencies
+        run: npm ci
+
+      - name: Run Tests
+        run: npm test
+
+  build-and-push-image:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Docker Hub Login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+      
+      - name: Build and Push Docker Image
+        run: |
+          docker build --platform linux/amd64 -t ${{ secrets.DOCKER_USERNAME }}/frontend:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/frontend:latest
+
+  deploy:
+    needs: build-and-push-image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+      
+      - name: Debug AWS Identity & CodeDeploy
+        run: |
+          echo "=== 1. 현재 사용 중인 자격 증명 확인 (Who am I?) ==="
+          aws sts get-caller-identity
+
+          echo "=== 2. 서울 리전(ap-northeast-2)에 있는 애플리케이션 목록 조회 ==="
+          aws deploy list-applications --region ap-northeast-2
+      
+      - name: Create .env file
+        run: |
+          echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" > .env
+          echo "DOCKER_TOKEN=${{ secrets.DOCKER_TOKEN }}" >> .env
+
+      - name: Zip package
+        run: |
+          mkdir -p deploy
+          cp docker-compose.yml appspec.yml .env deploy/
+          cp -r scripts deploy/
+          chmod +x deploy/scripts/*.sh
+          cd deploy && zip -r ../deploy.zip .
+
+      - name: Upload to S3
+        run: aws s3 cp deploy.zip s3://${{ secrets.S3_BUCKET_NAME }}/frontend/deploy.zip
+
+      - name: Trigger CodeDeploy
+        run: |
+          aws deploy create-deployment \
+            --application-name maru-community \
+            --deployment-group-name maru-fe-deploy-group \
+            --region ap-northeast-2 \
+            --s3-location bucket=${{ secrets.S3_BUCKET_NAME }},key=frontend/deploy.zip,bundleType=zip

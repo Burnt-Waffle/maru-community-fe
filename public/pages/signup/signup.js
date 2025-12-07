@@ -22,6 +22,8 @@ const passwordHelper = document.getElementById('password-helper');
 const passwordConfirmHelper = document.getElementById('password-confirm-helper');
 const nicknameHelper = document.getElementById('nickname-helper');
 
+const MAX_PROFILE_FILE_SIZE = 5 * 1024 * 1024;
+
 let selectedFile = null;
 
 // DOM이 완전히 로드된 후에 스크립트를 실행
@@ -39,6 +41,12 @@ imagePreview.addEventListener('click', () => {
 fileInput.addEventListener('change', (event) => {
     const file = event.target.files[0];
     if (file) {
+
+        if (file.size > MAX_PROFILE_FILE_SIZE) {
+            showToast(`프로필 사진의 용량은 ${MAX_PROFILE_FILE_SIZE / (1024 * 1024)}MB를 초과할 수 없습니다.`);
+            fileInput.value = '';
+            return;
+        }
 
         selectedFile = file;
 

@@ -14,6 +14,8 @@ const nicknameHelper = document.getElementById('nickname-helper');
 const submitButton = document.getElementById('submit-button');
 const deleteButton = document.getElementById('delete-account-button');
 
+const MAX_PROFILE_FILE_SIZE = 5 * 1024 * 1024;
+
 let selectedFile = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -53,8 +55,15 @@ imagePreview.addEventListener('click', () => {
 fileInput.addEventListener('change', (event) => {
     const file = event.target.files[0];
     if (file) {
+
+        if (file.size > MAX_PROFILE_FILE_SIZE) {
+            showToast(`프로필 사진의 용량은 ${MAX_PROFILE_FILE_SIZE / (1024 * 1024)}MB를 초과할 수 없습니다.`);
+            fileInput.value = '';
+            return;
+        }
+
         selectedFile = file;
-        
+
         const reader = new FileReader();
         reader.onload = (e) => {
             imagePreview.src = e.target.result;
@@ -62,7 +71,7 @@ fileInput.addEventListener('change', (event) => {
         reader.readAsDataURL(file);
     } else {
         // 취소를 누르면 다시 기본 이미지로 변경
-        // imagePreview.src = '/assets/profile-default.png';
+        imagePreview.src = '/assets/profile-default.png';
         selectedFile = null;
     }
 })
