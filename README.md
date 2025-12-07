@@ -21,7 +21,7 @@
 * **Web Server:** Express.js v5.1.0 (Static File Serving)
 * **Language:** JavaScript (ES6+ Modules), HTML5, CSS3
 * **Infrastructure:** Docker, Docker Compose
-* **CI/CD:** GitHub Actions, AWS S3, AWS CodeDeploy
+* **CI/CD:** GitHub Actions, AWS CodeDeploy, AWS S3
 
 ## ✨ 주요 기능 (Key Features)
 
