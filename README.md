@@ -1,8 +1,8 @@
 # 🏠 대청마루 (Daechungmaru) - Frontend
 
-> **당신의 이야기가 머무는 곳, 대청마루**
+> **당신의 이야기가 머무는 곳,**
 > 
-> 커뮤니티 서비스의 프론트엔드 레포지토리입니다.
+> **대청마루** 커뮤니티 서비스의 프론트엔드 레포지토리입니다.
 
 [![Node.js](https://img.shields.io/badge/Node.js-22.x-339933?style=flat-square&logo=node.js)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-5.1.0-000000?style=flat-square&logo=express)](https://expressjs.com/)
